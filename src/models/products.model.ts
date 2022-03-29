@@ -1,7 +1,9 @@
+import { ResultSetHeader } from 'mysql2';
 import db from './connection';
+import { Product } from '../interfaces/products.interface';
 
 const getAll = async () => {
-  const [result] = await db.query(`
+  const [result] = await db.execute(`
     SELECT
       id,
       name,
@@ -11,6 +13,15 @@ const getAll = async () => {
   return result;
 };
 
+const create = async (body: Product) => {
+  const [result] = await db.execute<ResultSetHeader>(`
+    INSERT INTO trybesmith.products
+      (name, amount)
+    VALUES (?, ?)`, [body.name, body.amount]);
+  return result.insertId;
+};
+
 export default {
   getAll,
+  create,
 };
