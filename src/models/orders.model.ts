@@ -1,9 +1,9 @@
-import db from './connection';
+import connection from './connection';
 import ProductsModel from './products.model';
 import { Order } from '../interfaces/orders.interface';
 
 const getAll = async () => {
-  const [result] = await db.execute<Order[] | any>(`
+  const [result] = await connection.execute<Order[] | any>(`
     SELECT
       id,
       userId
