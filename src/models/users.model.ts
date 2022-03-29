@@ -4,7 +4,7 @@ import { User } from '../interfaces/users.interface';
 
 const create = async (body: User) => {
   const [result] = await connection.execute<ResultSetHeader>(`
-    INSERT INTO trybesmith.users
+    INSERT INTO users
       (username, classe, level, password)
     VALUES (?, ?, ?, ?)`, [body.username, body.classe, body.level, body.password]);
   return result.insertId;

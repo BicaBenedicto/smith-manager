@@ -7,7 +7,7 @@ const getAll = async () => {
     SELECT
       id,
       userId
-    FROM trybesmith.orders`);
+    FROM orders`);
   const output = await Promise.all(result
     .map(async (order: any) => ({
       ...order,
