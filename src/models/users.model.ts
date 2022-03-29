@@ -4,7 +4,7 @@ import { User } from '../interfaces/users.interface';
 
 const create = async (body: User) => {
   const [result] = await connection.execute<ResultSetHeader>(`
-    INSERT INTO users
+    INSERT INTO Users
       (username, classe, level, password)
     VALUES (?, ?, ?, ?)`, [body.username, body.classe, body.level, body.password]);
   return result.insertId;

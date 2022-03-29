@@ -9,7 +9,7 @@ const getAll = async () => {
       name,
       amount,
       orderId
-    FROM products`);
+    FROM Products`);
   return result;
 };
 
@@ -20,7 +20,7 @@ const getByOrder = async (id: number): Promise<Product[]> => {
       name,
       amount,
       orderId
-    FROM products
+    FROM Products
     WHERE orderId = (?)`, [id]);
   const ordersIds = result.map((order: any) => order.id);
   return ordersIds;
@@ -28,7 +28,7 @@ const getByOrder = async (id: number): Promise<Product[]> => {
 
 const create = async (body: Product) => {
   const [result] = await connection.execute<ResultSetHeader>(`
-    INSERT INTO products
+    INSERT INTO Products
       (name, amount)
     VALUES (?, ?)`, [body.name, body.amount]);
   return result.insertId;
