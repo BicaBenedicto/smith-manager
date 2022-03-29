@@ -87,4 +87,10 @@ export default {
     
     return false;
   },
+  login: (body: any) => {
+    const { username, password } = body;
+    if (!username) return TYPES.usernameEmpty;
+    if (!password) return TYPES.passwordEmpty;
+    return false;
+  },
 };
