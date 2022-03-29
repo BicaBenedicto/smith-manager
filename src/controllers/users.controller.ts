@@ -15,7 +15,6 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
   const { body } = req;
   const [user] = await UsersModel.getByLogin(body);
   if (!user) return next({ code: 401, error: 'Username or password invalid' });
-  console.log(user);
   const token = jwt.sign(user, JWT);
   return res.status(200).json({ token });
 };

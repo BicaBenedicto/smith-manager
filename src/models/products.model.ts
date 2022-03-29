@@ -26,11 +26,31 @@ const getByOrder = async (id: number): Promise<Product[]> => {
   return ordersIds;
 };
 
+const getById = async (id: number) => {
+  const [result] = await connection.execute<ResultSetHeader>(`
+    SELECT
+      name,
+      amount
+    FROM Trybesmith.Products
+    WHERE id = (?)`, [id]);
+  return result;
+};
+
 const create = async (body: Product) => {
+  const { name, amount } = body;
   const [result] = await connection.execute<ResultSetHeader>(`
     INSERT INTO Trybesmith.Products
       (name, amount)
-    VALUES (?, ?)`, [body.name, body.amount]);
+    VALUES (?, ?)`, [name, amount]);
+  return result.insertId;
+};
+
+const createWithOrderId = async (body: Product) => {
+  const { name, amount, orderId } = body;
+  const [result] = await connection.execute<ResultSetHeader>(`
+    INSERT INTO Trybesmith.Products
+      (name, amount, orderId)
+    VALUES (?, ?, ?)`, [name, amount, orderId]);
   return result.insertId;
 };
 
@@ -38,4 +58,6 @@ export default {
   getAll,
   create,
   getByOrder,
+  getById,
+  createWithOrderId,
 };
