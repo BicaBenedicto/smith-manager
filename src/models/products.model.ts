@@ -13,6 +13,19 @@ const getAll = async () => {
   return result;
 };
 
+const getByOrder = async (id: number): Promise<Product[]> => {
+  const [result] = await db.execute<any>(`
+    SELECT
+      id,
+      name,
+      amount,
+      orderId
+    FROM trybesmith.products
+    WHERE orderId = (?)`, [id]);
+  const ordersIds = result.map((order: any) => order.id);
+  return ordersIds;
+};
+
 const create = async (body: Product) => {
   const [result] = await db.execute<ResultSetHeader>(`
     INSERT INTO trybesmith.products
@@ -24,4 +37,5 @@ const create = async (body: Product) => {
 export default {
   getAll,
   create,
+  getByOrder,
 };
