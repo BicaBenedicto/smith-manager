@@ -1,18 +1,16 @@
 import { Response, Request } from 'express';
 import { ProductsModel } from '../models';
+import { Product } from '../interfaces/products.interface';
 
-const getAll = async (_req: Request, res: Response) => {
-  const products = await ProductsModel.getAll();
-  return res.status(200).json(products);
-};
+export default class Products {
+  public getAll = async (_req: Request, res: Response) => {
+    const products = await ProductsModel.getAll();
+    return res.status(200).json(products);
+  };
 
-const create = async (req: Request, res: Response) => {
-  const { body } = req;
-  const insertId = await ProductsModel.create(body);
-  return res.status(201).json({ item: { ...body, id: insertId } });
-};
-
-export default {
-  getAll,
-  create,
-};
+  public create = async (req: Request, res: Response) => {
+    const product = req.body as Product;
+    const insertId = await ProductsModel.create(product);
+    return res.status(201).json({ item: { ...product, id: insertId } });
+  };
+}

@@ -4,6 +4,9 @@ import { UsersMiddleware } from '../middlewares';
 
 const router = express.Router();
 
-router.post('/', UsersMiddleware.create, UsersController.create);
+const usersMiddleware = new UsersMiddleware();
+const usersController = new UsersController();
+
+router.post('/', usersMiddleware.create, usersController.create);
 
 export default router;

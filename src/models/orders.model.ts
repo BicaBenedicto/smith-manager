@@ -1,7 +1,7 @@
 import { ResultSetHeader } from 'mysql2';
 import connection from './connection';
 import ProductsModel from './products.model';
-import { Order } from '../interfaces/orders.interface';
+import { Order, OrderGet } from '../interfaces/orders.interface';
 
 const getAll = async () => {
   const [result] = await connection.execute<Order[] | any>(`
@@ -10,7 +10,7 @@ const getAll = async () => {
       userId
     FROM Trybesmith.Orders`);
   const output = await Promise.all(result
-    .map(async (order: any) => ({
+    .map(async (order: OrderGet) => ({
       ...order,
       products: await ProductsModel.getByOrder(order.id),
     })));

@@ -1,3 +1,5 @@
+import { User, UserCreate } from '../interfaces/users.interface';
+
 const TYPES = {
   usernameEmpty: {
     code: 400,
@@ -49,28 +51,28 @@ const TYPES = {
   },
 };
 
-const verifyUsername = (username: string) => {
+const verifyUsername = (username: string): object | boolean => {
   if (!username) return TYPES.usernameEmpty;
   if (typeof username !== 'string') return TYPES.usernameBeString;
   if (username.length < 3) return TYPES.usernameBeLonger;
   return false;
 };
 
-const verifyClasse = (classe: string) => {
+const verifyClasse = (classe: string): object | boolean => {
   if (!classe) return TYPES.classeEmpty;
   if (typeof classe !== 'string') return TYPES.classeBeString;
   if (classe.length < 3) return TYPES.classeBeLonger;
   return false;
 };
 
-const verifyLevel = (level: number) => {
+const verifyLevel = (level: number): object | boolean => {
   if (level === undefined) return TYPES.levelEmpty;
   if (typeof level !== 'number') return TYPES.levelBeString;
   if (level < 1) return TYPES.levelBeLonger;
   return false;
 };
 
-const verifyPassword = (password: string) => {
+const verifyPassword = (password: string): object | boolean => {
   if (!password) return TYPES.passwordEmpty;
   if (typeof password !== 'string') return TYPES.passwordBeString;
   if (password.length < 8) return TYPES.passwordBeLonger;
@@ -78,7 +80,7 @@ const verifyPassword = (password: string) => {
 };
 
 export default {
-  create: (body: any) => {
+  create: (body: UserCreate): object | boolean => {
     const { username, classe, level, password } = body;
     if (verifyUsername(username)) return verifyUsername(username);
     if (verifyClasse(classe)) return verifyClasse(classe);
@@ -87,7 +89,7 @@ export default {
     
     return false;
   },
-  login: (body: any) => {
+  login: (body: User): object | boolean => {
     const { username, password } = body;
     if (!username) return TYPES.usernameEmpty;
     if (!password) return TYPES.passwordEmpty;

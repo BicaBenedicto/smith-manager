@@ -1,9 +1,12 @@
-import ProductValidate from './products.validation';
-import UserValidate from './users.validation';
+import { JwtPayload } from 'jsonwebtoken';
+import Product from './products.validation';
+import User from './users.validation';
+import Order from './orders.validation';
 import TokenValidate from './token.validation';
-import OrderValidate from './orders.validation';
 
-export const Product = ProductValidate;
-export const User = UserValidate;
-export const Order = OrderValidate;
-export const Token = async (token: string) => TokenValidate(token);
+export const ProductValidate = Product;
+export const UserValidate = User;
+export const OrderValidate = Order;
+export const Token = async (token: string): Promise<string | boolean | JwtPayload> => (
+  TokenValidate(token)
+);

@@ -1,3 +1,5 @@
+import { Order } from '../interfaces/orders.interface';
+
 const TYPES = {
   productEmpty: {
     code: 400,
@@ -13,18 +15,18 @@ const TYPES = {
   },
 };
 
-const verifyProducts = (products: number[]) => {
+const verifyProducts = (products: number[]): object | boolean => {
   if (!products) return TYPES.productEmpty;
   if (!Array.isArray(products)) return TYPES.productBeNumber;
   if (!products[0]) return TYPES.productUndefined;
-  const checkTypes = products.some((item: any) => typeof item !== 'number');
+  const checkTypes = products.some((item: number | string | object) => typeof item !== 'number');
   if (checkTypes) return TYPES.productBeNumber;
   return false;
 };
 
 export default {
-  create: (body: any) => {
-    const { products } = body;
+  create: (body: object): object | boolean => {
+    const { products } = body as Order;
     if (verifyProducts(products)) return verifyProducts(products);
     
     return false;

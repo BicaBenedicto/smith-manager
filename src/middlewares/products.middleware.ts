@@ -1,16 +1,16 @@
 import { Response, Request, NextFunction } from 'express';
-import { Product } from '../validations';
+import { ProductValidate } from '../validations';
+import { Product } from '../interfaces/products.interface';
 
-const getAll = async (_req: Request, _res: Response, next: NextFunction) => next();
+export default class Products {
+  public getAll = async (_req: Request, _res: Response, next: NextFunction): Promise<void> => (
+    next()
+  );
 
-const create = async (req: Request, _res: Response, next: NextFunction) => {
-  const { body } = req;
-  const validate = Product.create(body);
-  if (validate) return next(validate);
-  return next();
-};
-
-export default {
-  getAll,
-  create,
-};
+  public create = async (req: Request, _res: Response, next: NextFunction): Promise<void> => {
+    const product = req.body as Product;
+    const validate = ProductValidate.create(product);
+    if (validate) return next(validate);
+    return next();
+  };
+}

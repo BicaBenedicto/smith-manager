@@ -4,7 +4,10 @@ import { ProductsMiddleware } from '../middlewares';
 
 const router = express.Router();
 
-router.get('/', ProductsMiddleware.getAll, ProductsController.getAll);
-router.post('/', ProductsMiddleware.create, ProductsController.create);
+const productsController = new ProductsController();
+const productsMiddleware = new ProductsMiddleware();
+
+router.get('/', productsMiddleware.getAll, productsController.getAll);
+router.post('/', productsMiddleware.create, productsController.create);
 
 export default router;

@@ -1,3 +1,5 @@
+import { Product } from '../interfaces/products.interface';
+
 const TYPES = {
   nameEmpty: {
     code: 400,
@@ -25,27 +27,27 @@ const TYPES = {
   },
 };
 
-const verifyName = (name: string) => {
+const verifyName = (name: string): object | boolean => {
   if (!name) return TYPES.nameEmpty;
   if (typeof name !== 'string') return TYPES.nameBeString;
   if (name.length < 3) return TYPES.nameBeLonger;
   return false;
 };
 
-const verifyAmount = (amount: string) => {
+const verifyAmount = (amount: string): object | boolean => {
   if (!amount) return TYPES.amountEmpty;
   if (typeof amount !== 'string') return TYPES.amountBeString;
   if (amount.length < 3) return TYPES.amountBeLonger;
   return false;
 };
 
-const Product = {
-  create: (body: any) => {
-    const { name, amount } = body;
+const ProductValidate = {
+  create: (body: object): object | boolean => {
+    const { name, amount } = body as Product;
     if (verifyName(name)) return verifyName(name);
     if (verifyAmount(amount)) return verifyAmount(amount);
     return false;
   },
 };
 
-export default Product;
+export default ProductValidate;

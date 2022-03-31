@@ -1,21 +1,19 @@
 import { Response, Request, NextFunction } from 'express';
-import { User } from '../validations';
+import { UserValidate } from '../validations';
+import { User, UserCreate } from '../interfaces/users.interface';
 
-const create = async (req: Request, _res: Response, next: NextFunction) => {
-  const { body } = req;
-  const validate = User.create(body);
-  if (validate) return next(validate);
-  return next();
-};
+export default class UserClass {
+  public create = async (req: Request, _res: Response, next: NextFunction): Promise<void> => {
+    const user = req.body as UserCreate;
+    const validate = UserValidate.create(user);
+    if (validate) return next(validate);
+    return next();
+  };
 
-const login = async (req: Request, _res: Response, next: NextFunction) => {
-  const { body } = req;
-  const validate = User.login(body);
-  if (validate) return next(validate);
-  return next();
-};
-
-export default {
-  create,
-  login,
-};
+  public login = async (req: Request, _res: Response, next: NextFunction): Promise<void> => {
+    const user = req.body as User;
+    const validate = UserValidate.login(user);
+    if (validate) return next(validate);
+    return next();
+  };
+}
