@@ -4,7 +4,7 @@ import { User } from '../interfaces/users.interface';
 
 const create = async (body: User) => {
   const [result] = await connection.execute<ResultSetHeader>(`
-    INSERT INTO Trybesmith.Users
+    INSERT INTO Smith_Manager.Users
       (username, classe, level, password)
     VALUES (?, ?, ?, ?)`, [body.username, body.classe, body.level, body.password]);
   return result.insertId;
@@ -15,7 +15,7 @@ const getByLogin = async (body: User) => {
     `SELECT
       id,
       username
-    FROM Trybesmith.Users
+    FROM Smith_Manager.Users
     WHERE username = (?)
     AND password = (?)`,
     [body.username, body.password],

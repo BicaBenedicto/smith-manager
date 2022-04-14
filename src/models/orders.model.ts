@@ -8,7 +8,7 @@ const getAll = async () => {
     SELECT
       id,
       userId
-    FROM Trybesmith.Orders`);
+    FROM Smith_Manager.Orders`);
   const output = await Promise.all(result
     .map(async (order: OrderGet) => ({
       ...order,
@@ -19,7 +19,7 @@ const getAll = async () => {
 
 const create = async (userId: number) => {
   const [result] = await connection.execute<ResultSetHeader>(`
-    INSERT INTO Trybesmith.Orders
+    INSERT INTO Smith_Manager.Orders
       (userId)
     VALUES (?)`, [userId]);
   return result.insertId;
